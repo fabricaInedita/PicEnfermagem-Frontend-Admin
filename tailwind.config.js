@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {},
+    minWidth: {
+      '80': '20rem',
+    },
+    maxWidth: {
+      '80': '20rem',
+    }
   },
   plugins: [],
 }
