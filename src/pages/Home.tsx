@@ -18,7 +18,12 @@ function Home() {
   }, [])
   
   function handleUpdateQuestionaryState() {
-
+    setPageLoading(true)
+    questionaryStateService.changeState()
+      .then(response=>{
+        setQuestionaryState(response.data)
+        setPageLoading(false)
+      })
   }
 
   function handleSendCertificate() {
@@ -47,18 +52,18 @@ function Home() {
                     <p>
                       Estado:
                     </p>
-                    <p className={ "p-2 rounded-md flex justify-center border-2 border-white " +( !questionaryState?"bg-green-400":"bg-red-400")}>
+                    <p className={ "p-2 rounded-md flex justify-center border-2 border-white " +( questionaryState?"bg-green-400":"bg-red-400")}>
                       {
-                        !questionaryState?"Ativo":"Inativo"
+                        questionaryState?"Ativo":"Inativo"
                       }
                     </p>
-                    <Button className="p-3 bg-orange-400 rounded-md border-2 border-white ">
-                      {questionaryState?"Ativar":"Desativar"}
+                    <Button submit={()=>handleUpdateQuestionaryState()} className="p-3 bg-orange-400 rounded-md border-2 border-white ">
+                      {!questionaryState?"Ativar":"Desativar"}
                     </Button>
                     <p>A Gratificação só pode ser enviada quando o sistema estiver desativado.</p> 
                     <p>A Gratificação ira ser enviada aos 3 primeiros do ranking.</p> 
-                    <Button disable={!questionaryState} className={
-                        !questionaryState?
+                    <Button disable={questionaryState} className={
+                        questionaryState?
                         "p-3 bg-zinc-400 cursor-not-allowed rounded-md border-2 border-white"
                         :
                         "p-3 bg-orange-400 rounded-md border-2 border-white"
