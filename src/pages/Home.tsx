@@ -4,6 +4,7 @@ import Limiter from '../components/Limiter'
 import Button from '../components/Button'
 import { QuestionaryStateService } from '../services/QuestionaryStateService'
 import Loading from '../components/Loading'
+import { toast } from 'react-toastify'
 
 function Home() {
 
@@ -27,7 +28,13 @@ function Home() {
   }
 
   function handleSendCertificate() {
-    
+    setPageLoading(true)
+    questionaryStateService.changeState()
+      .then(response=>{
+        toast.success("Gratificação enviada com sucesso");
+        setQuestionaryState(response.data)
+        setPageLoading(false)
+      })
   }
 
   function handleGetQuestionary() {
@@ -62,7 +69,7 @@ function Home() {
                     </Button>
                     <p>A Gratificação só pode ser enviada quando o sistema estiver desativado.</p> 
                     <p>A Gratificação ira ser enviada aos 3 primeiros do ranking.</p> 
-                    <Button disable={questionaryState} className={
+                    <Button submit={()=>handleSendCertificate()} disable={questionaryState} className={
                         questionaryState?
                         "p-3 bg-zinc-400 cursor-not-allowed rounded-md border-2 border-white"
                         :
