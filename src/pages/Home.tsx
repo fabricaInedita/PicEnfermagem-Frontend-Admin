@@ -5,6 +5,7 @@ import Button from '../components/Button'
 import { QuestionaryStateService } from '../services/QuestionaryStateService'
 import Loading from '../components/Loading'
 import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
 
@@ -29,10 +30,9 @@ function Home() {
 
   function handleSendCertificate() {
     setPageLoading(true)
-    questionaryStateService.changeState()
+    questionaryStateService.sendCertificate()
       .then(response=>{
         toast.success("Gratificação enviada com sucesso");
-        setQuestionaryState(response.data)
         setPageLoading(false)
       })
   }
